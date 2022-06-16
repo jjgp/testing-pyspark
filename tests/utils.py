@@ -1,20 +1,20 @@
+# flake8: noqa
 import math
 import os
 import shutil
-import unittest
 import tempfile
-
+import unittest
 from contextlib import contextmanager
 
-from pyspark import SparkContext, SparkConf
+from pyspark import SparkConf, SparkContext
 from pyspark.sql import SparkSession
 from pyspark.sql.types import Row
-
 
 """
 TODO: I will port this to pytest, refactor, and clean it up. For now using unittest and copying
 portions from the private pyspark.testing module
 """
+
 
 class ReusedPySparkTestCase(unittest.TestCase):
     @classmethod
@@ -47,7 +47,9 @@ class SQLTestUtils:
         `value` to the configuration `key` and then restores it back when it exits.
         """
         assert isinstance(pairs, dict), "pairs should be a dictionary."
-        assert hasattr(self, "spark"), "it should have 'spark' attribute, having a spark session."
+        assert hasattr(
+            self, "spark"
+        ), "it should have 'spark' attribute, having a spark session."
 
         keys = pairs.keys()
         new_values = pairs.values()
@@ -69,7 +71,9 @@ class SQLTestUtils:
         A convenient context manager to test with some specific databases. This drops the given
         databases if it exists and sets current database to "default" when it exits.
         """
-        assert hasattr(self, "spark"), "it should have 'spark' attribute, having a spark session."
+        assert hasattr(
+            self, "spark"
+        ), "it should have 'spark' attribute, having a spark session."
 
         try:
             yield
@@ -84,7 +88,9 @@ class SQLTestUtils:
         A convenient context manager to test with some specific tables. This drops the given tables
         if it exists.
         """
-        assert hasattr(self, "spark"), "it should have 'spark' attribute, having a spark session."
+        assert hasattr(
+            self, "spark"
+        ), "it should have 'spark' attribute, having a spark session."
 
         try:
             yield
@@ -98,7 +104,9 @@ class SQLTestUtils:
         A convenient context manager to test with some specific views. This drops the given views
         if it exists.
         """
-        assert hasattr(self, "spark"), "it should have 'spark' attribute, having a spark session."
+        assert hasattr(
+            self, "spark"
+        ), "it should have 'spark' attribute, having a spark session."
 
         try:
             yield
@@ -112,7 +120,9 @@ class SQLTestUtils:
         A convenient context manager to test with some specific functions. This drops the given
         functions if it exists.
         """
-        assert hasattr(self, "spark"), "it should have 'spark' attribute, having a spark session."
+        assert hasattr(
+            self, "spark"
+        ), "it should have 'spark' attribute, having a spark session."
 
         try:
             yield
@@ -123,7 +133,10 @@ class SQLTestUtils:
     @staticmethod
     def assert_close(a, b):
         c = [j[0] for j in b]
-        diff = [abs(v - c[k]) < 1e-6 if math.isfinite(v) else v == c[k] for k, v in enumerate(a)]
+        diff = [
+            abs(v - c[k]) < 1e-6 if math.isfinite(v) else v == c[k]
+            for k, v in enumerate(a)
+        ]
         return sum(diff) == len(a)
 
 
